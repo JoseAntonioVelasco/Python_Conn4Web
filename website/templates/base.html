@@ -14,8 +14,8 @@
         href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
         crossorigin="anonymous"
         />
-
-        <title>{% block title %}Home{% endblock %}</title>
+        {% block links %}{% endblock %}
+        <title>{% block title %}Titulo{% endblock %}</title>
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -30,11 +30,13 @@
             <div class="collapse navbar-collapse" id="navbar">
                 <div class="navbar-nav">
                     {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" id="home" href="/">Home</a>
-                    <a class="nav-item nav-link" id="logout" href="/logout">Logout</a>
+                    <a class="nav-item nav-link" id="home" href="/">Inicio</a>
+                    <a class="nav-item nav-link" id="createMatch" href="/match">Crear partida</a>
+                    <a class="nav-item nav-link" id="joinMatch" href="/joinMatch">Unirse a partida</a>
+                    <a class="nav-item nav-link" id="logout" href="/logout">Desconectar</a>
                     {% else %}
-                    <a class="nav-item nav-link" id="login" href="/login">Login</a>
-                    <a class="nav-item nav-link" id="signUp" href="/sign-up">Sign Up</a>
+                    <a class="nav-item nav-link" id="login" href="/login">Iniciar sesión</a>
+                    <a class="nav-item nav-link" id="signUp" href="/sign-up">Registrarse</a>
                     {% endif %}
                 </div>
             </div>
