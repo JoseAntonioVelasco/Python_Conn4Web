@@ -15,7 +15,6 @@ def insideBoard(board, pos):
 
 
 def legalMove(board, pos):
-
     if insideBoard(board, pos) != True:
         return False
 
