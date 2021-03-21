@@ -1,12 +1,9 @@
-* {
-	border: 0;
-	padding: 0;
-}
-
 #game-board {
 	background: #0074B3;
 	width: 730px;
 	cursor: pointer;
+	border: 0;
+	padding: 0;
 }
 
 .column {
