@@ -2,7 +2,7 @@
 {% block title %}Unirse a partida{% endblock %}
 
 {% block content %}
-<form method="POST">
+<form method="POST" action="{{url_for('views.createMatch')}}">
     <h3 align="center">Unirse a partida</h3>
     <div class="form-group">
       <label for="matchId">Id de partida</label>

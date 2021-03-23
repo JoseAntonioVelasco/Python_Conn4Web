@@ -168,10 +168,16 @@
   var socket = io.connect()
   // broadcast a message
   socket.on('connect', function() {
-    socket.emit('my event',{
-      data: 'User Connected'
-    })
+    console.log('ha entrado en connect')
+    socket.emit('join', {})
   })
+
+  socket.on('status', function(data){
+    console.log('ha entrado en status')
+    $('#chat').val($('#chat').val() + '<' + data.msg + '>\n');
+    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+  })
+
   var form = $('form').on('submit', function(e){
     e.preventDefault()
     var texto = $('#text').val()

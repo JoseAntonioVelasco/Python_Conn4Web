@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, flash, jsonify
+from flask import Blueprint, render_template, request, flash, jsonify, session, redirect, url_for
 from flask_login import login_required, current_user
 from .models import Match
 from . import db
+#from . import session
 import json
 
 views = Blueprint('views',__name__)
@@ -20,14 +21,14 @@ def createMatch():
         new_match = Match(user1_id=current_user.id, status="Waiting")
         db.session.add(new_match)
         db.session.commit()
-    return render_template("match.html", user=current_user ,match=new_match)
 
+        session['username'] = current_user.first_name
+        session['room'] = new_match.id
 
-@views.route('/joinMatch',methods=['GET','POST'])
-@login_required
-def joinMatch():
-    #buscar id de partida
-    if request.method == 'POST':
+        return render_template("match.html", user=current_user ,match=new_match, session = session)
+
+    elif request.method == 'POST':
+        #buscar id de partida
         matchId = request.form.get('matchId')
 
         if len(matchId) < 1:
@@ -37,9 +38,11 @@ def joinMatch():
             if match == None:
                 #ese id de partida no existe
                 flash('No existe esa partida!', category='error')
+
             elif match.status == "Finished":
                 #partida ya acabada
                 flash('Esa partida ya ha acabado!', category='error')
+
             elif match.user1_id != current_user.id and match.user2_id == None:
                 #se une a una partida que estaba esperando
                 db.session.delete(match)
@@ -47,13 +50,25 @@ def joinMatch():
                 match.user2_id=current_user.id
                 db.session.add(match)
                 db.session.commit()
-                return render_template('match.html', user=current_user, match=match)
+                session['username'] = current_user.first_name
+                session['room'] = matchId
+                return render_template('match.html', user=current_user, match=match, session = session)
+
             elif match.user1_id != current_user.id and match.user2_id != current_user.id:
                 #Este jugador no pertenece a esta partida
                 flash('Esta partida ya esta llena!', category='error')
+                
             else:
                 #ese id de partida existe
-                return render_template('match.html', user=current_user, match=match)
+                session['username'] = current_user.first_name
+                session['room'] = matchId
+                return render_template('match.html', user=current_user, match=match, session = session)
+             
+
+
+@views.route('/joinMatch',methods=['GET','POST'])
+@login_required
+def joinMatch():
     return render_template('joinMatch.html', user=current_user)
 
 @views.route('/place', methods=['POST'])
