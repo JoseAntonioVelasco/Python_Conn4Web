@@ -30,18 +30,22 @@ def createMatch():
     elif request.method == 'POST':
         #buscar id de partida
         matchId = request.form.get('matchId')
-
+        
         if len(matchId) < 1:
             flash('No has introducido un id!', category='error')
+            return redirect(url_for('views.joinMatch'))
+
         else:
             match = Match.query.get(matchId)
             if match == None:
                 #ese id de partida no existe
                 flash('No existe esa partida!', category='error')
+                return redirect(url_for('views.joinMatch'))
 
             elif match.status == "Finished":
                 #partida ya acabada
                 flash('Esa partida ya ha acabado!', category='error')
+                return redirect(url_for('views.joinMatch'))
 
             elif match.user1_id != current_user.id and match.user2_id == None:
                 #se une a una partida que estaba esperando
@@ -57,7 +61,7 @@ def createMatch():
             elif match.user1_id != current_user.id and match.user2_id != current_user.id:
                 #Este jugador no pertenece a esta partida
                 flash('Esta partida ya esta llena!', category='error')
-                
+                return redirect(url_for('views.joinMatch'))
             else:
                 #ese id de partida existe
                 session['username'] = current_user.first_name

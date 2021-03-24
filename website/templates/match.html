@@ -149,7 +149,7 @@
     </div>
 </div>
 <textarea id="chat" cols="70" rows="10" placeholder="No hay mensajes todavia."></textarea><br><br>
-<form action="" method="POST">
+<form action="">
   <input type="text" id="text" size="60" placeholder="Escribe tu mensaje aqui"/>
   <button type="submit" id="send" class="btn btn-success">ENVIAR</button>
 </form>
@@ -178,13 +178,17 @@
     $('#chat').scrollTop($('#chat')[0].scrollHeight);
   })
 
-  var form = $('form').on('submit', function(e){
-    e.preventDefault()
-    var texto = $('#text').val()
-    console.log(texto)
+  socket.on('message', function(data){
+    console.log('ha entrado en message')
+    $('#chat').val($('#chat').val() + data.msg() + '\n');
+    $('#chat').scrollTop($('#chat')[0].scrollHeight);
   })
-  socket.on('my response', function(msg){
-    console.log(msg)
+
+  $("#send").click(function(e){
+    console.log('ha entrado en send')
+    texto = $('#text').val()
+    $('#text').val('')
+    socket.emit('text', {msg: text})
   })
 </script>
 {% endblock %}
