@@ -4,44 +4,44 @@ class Position:
         self.y = y
 
 
-def insideBoard(board, pos):
+def insideBoard(board, x, y):
     columns = len(board[0])
     rows = len(board)
 
-    if pos.x in range(columns) and pos.y in range(rows):
+    if x in range(columns) and y in range(rows):
         return True
     else:
         return False
 
 
-def legalMove(board, pos):
-
-    if insideBoard(board, pos) != True:
+def legalMove(board, x, y):
+    if insideBoard(board, x, y) == False:
         return False
 
-    cond1 = board[pos.y][pos.x] == ''
-    cond2 = board[pos.y-1][pos.x] == ('x' or 'o')
+    cond1 = board[y][x] == 'free'
+    cond2 = (board[y-1][x] == 'red') or (board[y-1][x] == 'yellow')
+    cond3 = (y == 0)
 
-    if cond1 and cond2:
+    if (cond1 and cond2) or (cond3):
         return True
     else:
         return False
 
 
-def win(board, pos, turn):
+def win(board, x, y, turn):
     directions = [[[0, 1], [0, -1]], [[1, 1], [-1, -1]],
                [[1, 0], [-1, 0]], [[1, -1], [-1, 1]]]
     for direction in directions:
         counter = 0
         for vector in direction:
             loop = 0
-            x = pos.x
-            y = pos.y
+            x_ = x
+            y_ = y
             for loop in range(4):
                 loop = loop + 1
-                x = x + vector[0]
-                y = y + vector[1]
-                cond = insideBoard(board,Position(x,y)) and board[y][x] == turn
+                x_ = x_ + vector[0]
+                y_ = y_ + vector[1]
+                cond = insideBoard(board, x_, y_) and board[y_][x_] == turn
                 if cond:
                     counter = counter + 1
                 else:

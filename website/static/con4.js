@@ -1,68 +1,39 @@
-(function() {
+var gameBoard = [];
+var playerColor = "None";
 
-	var ConnectFour = function() {
+function markNextFree(x){
+	var nextY = false;
 
-		gameBoard = [];
-		currentPlayer = 'red';
-		numRows = 6;
-		numCols = 7;
-		numTurns = 0;
-		
-		_init = function() {
-			
-			var columns;
-			
-			columns = document.querySelectorAll('.column');
-			
-			Array.prototype.forEach.call(columns, function(col) {
-				col.addEventListener('click', function() {
-					markNextFree(col.getAttribute('data-x'));
-				});
-			});
-			
-			//inicializo el array
-			for(var i=0; i<7; i++){
-				gameBoard.push(['free','free','free','free','free','free']);
-			}
-		};
-		
-		var markNextFree = function(x) {
-			
-			var nextY;
-			nextY = false;
-			
-			//busca la casilla disponible en esa columna
-			for(var y = 0; y < numRows; y++) {
-				if(gameBoard[x][y] === 'free') {
-					nextY = y;
-					break;
-				}
-			}
-			
-			if(nextY === false) {
-				alert('No free spaces in this column. Try another.');
-				return false;
-			}
-			
-			//pone el color en el tablero
-			gameBoard[x][nextY] = currentPlayer;
-			
-			//pone ficha en esa casilla
-			document.querySelector('#column-'+x+' .row-'+nextY+' circle').setAttribute(
-					'class', currentPlayer
+	//busca la casilla disponible en esa columna
+	for(var y = 0; y < 6; y++) {
+		if(gameBoard[y][x] === 'free') {
+			nextY = y;
+			console.log('deeebug')
+			console.log('playerColorx: '+x+' y: '+y);
+			console.log(gameBoard);
+			break;
+		}
+	}
+	
+	//alerta de columna llena
+	if(nextY === false) {
+		alert('La columna esta llena :-).');
+		return false;
+	}
+
+	return [true, x, nextY, playerColor]
+}
+
+function loadBoard(board){
+	for(var y=0; y<6; y++){
+		for(var x=0; x<7; x++){
+
+			document.querySelector('#column-'+x+' .row-'+y+' circle').setAttribute(
+					'class', board[y][x]
 			);
 			
-			//rota color
-			currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red';
+		}
+	}
+	gameBoard=board
+}
 
-		};
-		
-		
-		_init();
-		
-	};
-
-	ConnectFour();
-  
-	
-})();
