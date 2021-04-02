@@ -41,8 +41,22 @@ def getBoard(matchID):
         board.append(row)
     
     moves = Move.query.filter_by(id_match=matchID).order_by(Move.nturn).all()
-    print(moves)
     for move in moves:
         board[int(move.y)][int(move.x)] = move.color
     return board
 
+def getMatchInfo(matchID):
+
+    match = Match.query.get(matchID)
+    user1 = User.query.get(match.user1_id)
+    user2 = User.query.get(match.user2_id)
+
+    matchInfo = {
+        "id": matchID,
+        "username1": user1.first_name,
+        "status": match.status,
+    }
+    if user2:
+        matchInfo["username2"] = user2.first_name
+
+    return matchInfo

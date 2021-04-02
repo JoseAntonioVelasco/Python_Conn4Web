@@ -92,6 +92,14 @@ Tienes que tener un interprete de python3 instalado en el ordenador, puedes cons
 
 Para clonar repositorios tambien es necesario tener git instalado, desde la siguiente pagina lo puedes descargar: https://git-scm.com/.
 
+Para comprobar la correcta instalacion de python puedes utilizar el siguiente comando
+   ```sh
+   python --version
+   ```
+Para comprobar la correcta instalacion de git puedes utilizar el siguiente comando: 
+   ```sh
+   git --version
+   ```
 ### Instalación del proyecto
 
 1. Clona el repositorio
@@ -102,9 +110,13 @@ Para clonar repositorios tambien es necesario tener git instalado, desde la sigu
    ```sh
    python -m venv "nombre del entorno virtual"
    ```
-3. Activa el entorno virtual
+3. Activa el entorno virtual (Windows)
    ```sh
    "nombre del entorno virtual"/scripts/activate
+   ```
+   (Linux)
+   ```sh
+   source "nombre del entorno virtual"/bin/activate
    ```
 2. Instala los requisitos dentro del entorno virtual
    ```sh

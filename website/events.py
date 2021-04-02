@@ -4,7 +4,7 @@ from flask_login import current_user
 from sqlalchemy.sql import func
 from . import socketio, db
 from .con4 import utilities as u
-from .models import getBoard, Move, Match
+from .models import getBoard, getMatchInfo,Move, Match
 
 events = Blueprint('events',__name__)
 
@@ -26,7 +26,8 @@ def join(message, namespace='/match'):
 
     #conseguimos el tablero de esa partida
     board = getBoard(matchID)
-    emit('status', {'msg': session.get('username') + ' ha entrado a la sala', 'board': board, 'color': color}, room = matchID)
+    matchInfo = getMatchInfo(matchID)
+    emit('status', {'msg': session.get('username') + ' ha entrado a la sala', 'board': board, 'matchInfo': matchInfo,'color': color}, room = matchID)
 
 @socketio.on('text')
 def text(message, namespace='/match'):
@@ -34,13 +35,6 @@ def text(message, namespace='/match'):
     matchID = int(session.get('room'))
     emit('message', {'msg': session.get('username') + ' : ' + message['msg']}, room = matchID)
 
-@socketio.on('left')
-def left(message, namespace='/match'):
-    matchID = int(session.get('room'))
-    username = session.get('username')
-    leave_room(matchID)
-    session.clear()
-    emit('status',{'msg: username' + 'ha salido de la sala'}, room = matchID)
 
 @socketio.on('place')
 def place(data, namespace='/match'):
@@ -54,23 +48,27 @@ def place(data, namespace='/match'):
     
     match = Match.query.get(matchID)
     #si todavia no ha entrado un rival no puede mover
-    if match.status == "Waiting" or match.status == "Finished":
-        print('La partida esta waiting o a acabado')
+    if match.status == "Waiting":
+        emit('notice', {'msg': 'La partida esta esperando a un jugador'}, room = matchID)
+        return
+    elif match.status == "Finished":
+        emit('notice', {'msg': 'La partida ha acabado!'}, room = matchID)
         return
     #para que pueda mover tiene que ser su turno
     elif current_user.id == match.turn:
+        #conseguimos el numero de turno para saber si es empate
+        nturn = db.session.query(func.count(Move.id_match)).filter(Move.id_match == matchID).one()
+        turn_number = nturn[0]
         #comprueba si el movimiento es valido
         board = getBoard(matchID)
         if u.legalMove(board, x, y) == False:
-            print('Movimiento no valido, ¿haciendo trampas?')
+            #movimiento no valido
             return
-        #comrpueba si el movimiento es ganador
-        elif u.win(board, x, y, color):
+        #comprueba si el movimiento es ganador o empate
+        elif u.win(board, x, y, color) or turn_number == 41:
             match.status = "Finished"
-            flash('Hay un ganador', category='success')
         #añadimos el movimiento a la base de datos
-        nturn = db.session.query(func.count(Move.id_match)).filter(Move.id_match == matchID)
-        new_move = Move(id_match=matchID, x=x, y=y, color=color, nturn=nturn)
+        new_move = Move(id_match=matchID, x=x, y=y, color=color, nturn=turn_number)
         db.session.add(new_move)
         #rota turno
         if match.turn == match.user1_id:
@@ -81,5 +79,6 @@ def place(data, namespace='/match'):
 
         emit('place', {'x': x, 'y':y, 'color':color}, room = matchID)
     else:
-        print('no es tu turno')
+        #no es su turno
+        return
     

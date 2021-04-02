@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, jsonify, session, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Match
+from .models import Match, User
 from . import db
 import json
 
@@ -24,7 +24,7 @@ def createMatch():
         session['username'] = current_user.first_name
         session['room'] = new_match.id
 
-        return render_template("match.html", user=current_user ,match=new_match, session = session)
+        return render_template("match.html", user=current_user, session = session)
 
     elif request.method == 'POST':
         #buscar id de partida
@@ -55,7 +55,8 @@ def createMatch():
 
                 session['username'] = current_user.first_name
                 session['room'] = matchId
-                return render_template('match.html', user=current_user, match=match, session = session)
+
+                return render_template('match.html', user=current_user, session = session)
 
             elif match.user1_id != current_user.id and match.user2_id != current_user.id:
                 #Este jugador no pertenece a esta partida
@@ -65,7 +66,8 @@ def createMatch():
                 #ese id de partida existe
                 session['username'] = current_user.first_name
                 session['room'] = matchId
-                return render_template('match.html', user=current_user, match=match, session = session)
+
+                return render_template('match.html', user=current_user, session = session)
              
 
 
@@ -73,3 +75,5 @@ def createMatch():
 @login_required
 def joinMatch():
     return render_template('joinMatch.html', user=current_user)
+
+
