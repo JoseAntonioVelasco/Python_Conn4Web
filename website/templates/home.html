@@ -3,6 +3,30 @@
 
 {% block content %}
 <h1 align="center">Bienvenido a Conecta4 Online</h1>
-<p>Has iniciado sesión con: {{user.first_name}}</p><br/>
-<p>Por aqui podras encontrar información que te puede interesar</p>
+<p>Has iniciado sesión con: {{user.first_name}}</p>
+<p align="center"><b>Por aqui podras encontrar información que te puede interesar</b></p>
+<div class="row">
+    <div class="col-sm-6" style="border:1px solid black;">
+        <h2>Intrucciones generales de la página</h2>
+        <p>Hay 4 pestañas en el menu superior</p>
+        <ul>
+            <li>Inicio: volveras a esta misma pagina que estas viendo.</li>
+            <li>Crear partida: crearas una partida en la que se tiene que unir otro jugador o podras jugar contra la maquina si seleccionas una IA.</li>
+            <li>Unirse a partida: necesitaras el id de la partida a la que quieres unirte.</li>
+            <li>Desconectar: sales de la cuenta en la que has iniciado sesion.</li>
+        </ul>
+        <p>En el conecta 4 el primer jugador que una 4 fichas del mismo color en una linea horizontal, vertical o diagonal gana, si se rellenan las 42 casillas y no hay un ganador es empate.</p>
+    </div>
+    <div class="col-sm-6" style="border:1px solid black;">
+        <h2>Reportar errores</h2>
+        <p>Si encontrais algun error en la web podeis reportarlo abriendo una issue en el siguiente enlace: <a href="https://github.com/JoseAntonioVelasco/Python_Conn4Web/issues">Reportar error</a></p>
+        <p>Para reportar errores incluid toda la información posible y que creais conveniente: </p>
+        <ul>
+            <li>Navegador y configuración que esteis usando.</li>
+            <li>Los pasos para que ocurra el error.</li>
+            <li>Lo que muestra el error.</li>
+        </ul>
+    </div>
+</div>
+
 {% endblock %}
