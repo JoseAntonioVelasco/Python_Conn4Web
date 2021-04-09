@@ -10,6 +10,7 @@ class Match(db.Model):
     user1_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user2_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     turn = db.Column(db.Integer, db.ForeignKey('user.id'))
+    solo = db.Column(db.Boolean)
 
     #define relationships
     user1 = db.relationship("User", foreign_keys=[user1_id])

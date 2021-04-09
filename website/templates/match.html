@@ -156,20 +156,39 @@
     <p align="center" style="font-size:160%;"><b>Información de la partida</b></p>
     <p id="matchInfo"></p>
 
-    <div class="dropdown" align="center">
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-        Solo play: Selecciona IA
-      </button>
-      <div class="dropdown-menu">
-        <button class="dropdown-item" href="#">IA1</button>
-        <button class="dropdown-item" href="#">IA2</button>
-        <button class="dropdown-item" href="#">IA3</button>
+    <div style="border:1px solid black;">
+    <p align="center"><b>Solo play</b></p>
+
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <select class="form-control" id="selectAI">
+          <option value="0">Selecciona IA</option>
+          <option value="1">RandomIA</option>
+          <option value="2">2IA2</option>
+          <option value="3">IA3</option>
+        </select>
       </div>
+      <div class="col-md-3"></div>
+    </div>
+
+    <br>
+    <div align="center">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="redColor" value="red">
+        <label class="form-check-label" for="inlineRadio1">Rojo</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="yellowColor" value="yellow">
+        <label class="form-check-label" for="inlineRadio2">Amarillo</label>
+      </div>
+      <button type="button" class="btn btn-success" onClick="getData()">Empezar</button>
     </div>
     <br>
+  </div>
 
     <p align="center" style="font-size:160%;"><b>Chat</b></p>
-    <textarea id="chat" cols="40" rows="10" placeholder="No hay mensajes todavia."></textarea><br/>
+    <textarea id="chat" cols="40" rows="7" placeholder="No hay mensajes todavia."></textarea><br/>
     <input type="text" id="text" size="31" placeholder="Escribe tu mensaje aqui"/>
     <button type="button" id="send" class="btn btn-success"><i class="fa fa-paper-plane"></i></button>
 
@@ -189,71 +208,36 @@
   src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.js"
 ></script>
 
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='socket_match.js') }}"
+></script>
+
 <script>
+  //VARIABLES GLOBALES
+
   var socket = io.connect()
+  _initSocket(socket)
+  var gameBoard = [];
+  var playerColor = "None";
 
-  // broadcast a message to backend
-  socket.on('connect', function() {
-    console.log('ha entrado en connect')
-    socket.emit('join', {})
-  })
+  //variables de una ia
+  var ai_name;
+  var ai_color;
+  var ai_turn;
+  //si se añade una ia añadir aqui el nombre
+  var ai_names = ['randomIA']
 
-  $("#send").click(function(e){
-    console.log('ha entrado en send')
-    texto = $('#text').val()
-    $('#text').val('')
-    socket.emit('text', {msg: texto})
-  })
+  //VARIABLES GLOBALES
 
-	var columns = document.querySelectorAll('.column');
-	Array.prototype.forEach.call(columns, function(col) {
-		col.addEventListener('click', function() {
-      console.log('ha hecho click en una columna')
-			var flag = markNextFree(col.getAttribute('data-x'));
-			if(flag[0]){
-        console.log('ha hecho click en una columna y manda emit')
-        x = flag[1]
-        y = flag[2]
-        color = flag[3]
-        socket.emit('place', {x: x, y: y, color: color})
-			}
-		});
-	});
-  
-
-  // message from backend to frontend
-  socket.on('status', function(data){
-    console.log('ha entrado en status')
-    //ha entrado al chat
-    $('#chat').val($('#chat').val() + '<' + data.msg + '>\n');
-    $('#chat').scrollTop($('#chat')[0].scrollHeight);
-
-    //cargar partida y datos
-    loadBoard(data.board)
-    $('#matchInfo').empty().append("Usuario 1: "+data.matchInfo.username1+"<br>Usuario 2: "+data.matchInfo.username2+"<br>Estado de la partida: "+data.matchInfo.status+"<br>Id de partida: "+data.matchInfo.id)
-    
-    if(playerColor == "None"){
-      playerColor = data.color
-    }
-  })
-
-  socket.on('message', function(data){
-    console.log('ha entrado en message')
-    $('#chat').val($('#chat').val() + data.msg + '\n');
-    $('#chat').scrollTop($('#chat')[0].scrollHeight);
-  })
-  
-  socket.on('place', function(data){
-    console.log('ha entrado en place')
-    document.querySelector('#column-'+data.x+' .row-'+data.y+' circle').setAttribute(
-					'class', data.color
-    );
-    gameBoard[data.y][data.x] = playerColor;
-  })
-
-  socket.on('notice',function(data){
-    alert(data.msg)
-  })
-
+ /*
+ Pasos para crear ias
+ 1. crea una funcion que devuelva la columna en la que pone la ia
+ 2. meter ese valor siguiendo el patron que se ve en el switch de el socket de 'place'
+ */
+//TODO
+/*
+1. los turnos no funcionan todavia
+*/
 </script>
 {% endblock %}

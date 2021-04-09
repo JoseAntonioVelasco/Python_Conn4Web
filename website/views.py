@@ -17,7 +17,7 @@ def home():
 def createMatch():
     if request.method == 'GET':
         #genera una nueva partida
-        new_match = Match(user1_id=current_user.id, status="Waiting", turn=current_user.id)
+        new_match = Match(user1_id=current_user.id, status="Waiting", turn=current_user.id, solo=False)
         db.session.add(new_match)
         db.session.commit()
 

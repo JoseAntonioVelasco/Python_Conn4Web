@@ -1,9 +1,11 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import event
 from os import path
 from flask_login import LoginManager
 from flask_socketio import SocketIO
 from flask_session import Session
+from werkzeug.security import generate_password_hash
 
 db = SQLAlchemy()
 
@@ -57,4 +59,15 @@ def create_database(app):
     #si no existe la base de datos la crea
     if not path.exists('website/' + DB_NAME):
         db.create_all(app=app)
+
+        from .models import User
+
+        #añadir los usuarios de las IAs
+        with app.app_context():
+            randomIA = User(email="randomIA@gmail.com", first_name="randomIA",
+                            password=generate_password_hash("randomPasswd:)", method='sha256'))
+            db.session.add(randomIA)
+            db.session.commit()
+
         print('Created Database!')
+
