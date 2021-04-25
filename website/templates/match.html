@@ -165,8 +165,8 @@
         <select class="form-control" id="selectAI">
           <option value="0">Selecciona IA</option>
           <option value="1">RandomIA</option>
-          <option value="2">2IA2</option>
-          <option value="3">IA3</option>
+          <option value="2">RandomPlusIA</option>
+          <option value="3">MinimaxIA</option>
         </select>
       </div>
       <div class="col-md-3"></div>
@@ -214,7 +214,7 @@
 ></script>
 
 <script>
-  //VARIABLES GLOBALES
+  /*VARIABLES GLOBALES*/
 
   var socket = io.connect()
   _initSocket(socket)
@@ -225,19 +225,28 @@
   var ai_name;
   var ai_color;
   var ai_turn;
-  //si se añade una ia añadir aqui el nombre
-  var ai_names = ['randomIA']
 
-  //VARIABLES GLOBALES
+  //si se añade una ia añadir aqui el nombre
+  var ai_names = ['randomIA','randomPlusIA','minimaxIA']
+
+  /*VARIABLES GLOBALES*/
+  
+  /*TESTING*/
+
+  //test_checkNinRow()
+  //test_checkNinRowPoints()
+
+  /*TESTING*/
+
 
  /*
- Pasos para crear ias
- 1. crea una funcion que devuelva la columna en la que pone la ia
- 2. meter ese valor siguiendo el patron que se ve en el switch de el socket de 'place'
+ Pasos para crear/añadir ias
+ 1. crea una funcion que devuelva la columna en la que pone la IA
+ 2. meter ese valor siguiendo el patron que se ve en el switch de la funcion soloPlayTurnSystem
+ 3. meter esa IA dentro del select para que pueda ser seleccionada desde la UI
+ 4. meter el nombre de la IA dentro de la variable ai_names
+ 5. en el fichero __init__.py en la funcion de crear base de datos añadir un nuevo usuario con la nueva IA
  */
-//TODO
-/*
-1. los turnos no funcionan todavia
-*/
+
 </script>
 {% endblock %}

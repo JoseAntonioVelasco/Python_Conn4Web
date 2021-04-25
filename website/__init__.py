@@ -66,7 +66,13 @@ def create_database(app):
         with app.app_context():
             randomIA = User(email="randomIA@gmail.com", first_name="randomIA",
                             password=generate_password_hash("randomPasswd:)", method='sha256'))
+            randomPlusIA = User(email="randomPlusIA@gmail.com", first_name="randomPlusIA",
+                            password=generate_password_hash("randomPasswd:)", method='sha256'))
+            minimaxIA = User(email="minimaxIA@gmail.com", first_name="minimaxIA",
+                            password=generate_password_hash("randomPasswd:)", method='sha256'))
             db.session.add(randomIA)
+            db.session.add(randomPlusIA)
+            db.session.add(minimaxIA)
             db.session.commit()
 
         print('Created Database!')

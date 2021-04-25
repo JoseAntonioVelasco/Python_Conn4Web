@@ -23,7 +23,7 @@ function _initSocket(socket){
 
         col.addEventListener('click', function() {
             var clicked_col = col.getAttribute('data-x')
-            var nextFree = markNextFree(clicked_col);
+            var nextFree = markNextFree(gameBoard, clicked_col);
             if(nextFree !== false){
                 socket.emit('place', {x: clicked_col, y: nextFree, color: playerColor})
             }else{
@@ -123,18 +123,6 @@ function getData(){
 
 
 //-------------------------------------------------------------------------------------------//
-
-function randomIA(){
-    //genera una columna aleatoria ente 0 y 6
-    var col = Math.floor(Math.random() * 7);
-    //comprueba si esa columna esta llena
-    while(markNextFree(col) === false){
-        col = Math.floor(Math.random() * 7);
-    }
-    //pone en esa columna
-    return col;
-}
-
 function soloPlayTurnSystem(solo_play){
     if(solo_play){
         //ver si es turno de la ia
@@ -144,7 +132,17 @@ function soloPlayTurnSystem(solo_play){
                 //añadir tantos case como ias halla 
                 case "randomIA":
                     x = randomIA();
-                    y = markNextFree(x);
+                    y = markNextFree(gameBoard, x);
+                    color = ai_color
+                    break;
+                case "randomPlusIA":
+                    x = randomPlusIA();
+                    y = markNextFree(gameBoard, x);
+                    color = ai_color
+                    break;
+                case "minimaxIA":
+                    x = minimaxIA();
+                    y = markNextFree(gameBoard, x);
                     color = ai_color
                     break;
             }
@@ -158,3 +156,46 @@ function soloPlayTurnSystem(solo_play){
         
     }
 }
+//---------------------------------IAs---------------------------------------------------//
+
+function randomIA(){
+    //genera una columna aleatoria ente 0 y 6
+    var col = Math.floor(Math.random() * 7);
+    //comprueba si esa columna esta llena
+    while(markNextFree(gameBoard, col) === false){
+        col = Math.floor(Math.random() * 7);
+    }
+    //pone en esa columna
+    return col;
+}
+function randomPlusIA(){
+    //hallamos las columnas libres
+    var freeCols = getFreeColumns(gameBoard);
+    var length = freeCols.length;
+
+    //comprueba si puede hacer algun buen movimiento
+    for(var n=3; n>0; n--){
+        for(var i = 0; i<length; i++){
+            var x = freeCols[i];
+            var y = markNextFree(gameBoard, x);
+            if(checkNinRow(gameBoard, x, y, ai_color, n)){
+                return x; //victoria/3enraya/2enraya
+            }else if(checkNinRow(gameBoard, x, y, playerColor, n)){
+                return x; //bloquear victoria/3enraya/2enraya
+            }
+        }
+    }
+
+    //despues de comprobar posibles opciones se decide aleatoriamente
+    var x = Math.floor(Math.random() * 7);
+    //comprueba si esa columna esta llena
+    while(markNextFree(gameBoard, x) === false){
+        x = Math.floor(Math.random() * 7);
+    }
+    return x;
+}
+function minimaxIA(){
+    var x = firstBranch(gameBoard, ai_color, 5)
+    return x;
+}
+

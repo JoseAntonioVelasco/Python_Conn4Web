@@ -1,10 +1,14 @@
-class Position:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-
 def insideBoard(board, x, y):
+    """detecta si la ficha que quieres poner esta dentro de los limites del tablero
+
+    Args:
+        board (list): lista que contiene el tablero
+        x (int): posicion x en la que quieres poner en el tablero
+        y (int): posicion y en la que quieres poner en el tablero
+
+    Returns:
+        boolean: si esta dentro true si no false
+    """
     columns = len(board[0])
     rows = len(board)
 
@@ -15,6 +19,17 @@ def insideBoard(board, x, y):
 
 
 def legalMove(board, x, y):
+    """Comprueba si el movimiento es valido, que no se superponga sobre otras fichas,
+    este dentro del tablero y que no este flotando la ficha
+
+    Args:
+        board (list): lista que contiene el tablero
+        x (int): posicion x en la que quieres poner en el tablero
+        y (int): posicion y en la que quieres poner en el tablero
+
+    Returns:
+        boolean: si el movimiento es valido
+    """
     if insideBoard(board, x, y) == False:
         return False
 
@@ -29,6 +44,17 @@ def legalMove(board, x, y):
 
 
 def win(board, x, y, turn):
+    """detecta si en ese movimiento hay victoria
+
+    Args:
+        board (list): lista que contiene el tablero
+        x (int): posicion x en la que quieres poner en el tablero
+        y (int): posicion y en la que quieres poner en el tablero
+        turn (string): que jugador ha puesto, ej: 'X'/'O' o 'red'/'yellow'
+
+    Returns:
+        boolean: true si hay victoria, false si no hay victoria
+    """
     directions = [[[0, 1], [0, -1]], [[1, 1], [-1, -1]],
                [[1, 0], [-1, 0]], [[1, -1], [-1, 1]]]
     for direction in directions:
