@@ -132,11 +132,11 @@ Para comprobar la correcta instalacion de git puedes utilizar el siguiente coman
 En este apartado adjunto unas imagenes en las que seque se vea como se ve la web en funcionamiento, si probais el proyecto y no se me parecido a lo que se ve en las siguientes imagenes es porque algo debe de estar funcionando mal.
 
 **Inicio de sesion**
-![image info](./imgreadme/ImgReadme1.png)
+![image info](./imgreadme/ImgReadme1.PNG)
 **Inicio**
-![image info](./imgreadme/ImgReadme2.png)
+![image info](./imgreadme/ImgReadme2.PNG)
 **Crear Partida**
-![image info](./imgreadme/ImgReadme3.png)
+![image info](./imgreadme/ImgReadme3.PNG)
 
 
 <!-- CONTRIBUTING -->
