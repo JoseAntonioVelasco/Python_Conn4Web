@@ -6,17 +6,16 @@ from . import socketio, db
 from .con4 import utilities as u
 from .models import getBoard, getMatchInfo, Move, Match, User
 
-events = Blueprint('events',__name__)
+events = Blueprint('events', __name__)
 
 
 @socketio.on('join')
 def join(message, namespace='/match'):
-    print('ha entrado al join')
-    #conseguimos el matchID al que ha entrado y le unimos al socket
+    # conseguimos el matchID al que ha entrado y le unimos al socket
     matchID = int(session.get('room'))
     join_room(matchID)
 
-    #le asignamos un color al usuario, si es el que crea la partida sera el color rojo, si es el que se uno sera el amarillo
+    # le asignamos un color al usuario, si es el que crea la partida sera el color rojo, si es el que se uno sera el amarillo
     match = Match.query.get(matchID)
     color = "undefined"
     if current_user.id == match.user1_id:
@@ -24,81 +23,81 @@ def join(message, namespace='/match'):
     else:
         color = "yellow"
 
-    #conseguimos el tablero de esa partida
+    # conseguimos el tablero de esa partida
     board = getBoard(matchID)
     matchInfo = getMatchInfo(matchID)
-    emit('status', {'msg': session.get('username') + ' ha entrado a la sala', 'board': board, 'matchInfo': matchInfo,'color': color}, room = matchID)
+    emit('status', {'msg': session.get('username') + ' ha entrado a la sala',
+                    'board': board, 'matchInfo': matchInfo, 'color': color}, room=matchID)
+
 
 @socketio.on('text')
 def text(message, namespace='/match'):
-    print('ha entrado en text')
     matchID = int(session.get('room'))
-    emit('message', {'msg': session.get('username') + ' : ' + message['msg']}, room = matchID)
+    emit('message', {'msg': session.get('username') +
+                     ' : ' + message['msg']}, room=matchID)
 
 
 @socketio.on('place')
 def place(data, namespace='/match'):
-    print('ha entrado al place')
     matchID = int(session.get('room'))
-    print(data)
-    
+
     x = int(data['x'])
     y = int(data['y'])
     color = data['color']
-    
+
     match = Match.query.get(matchID)
-    #si todavia no ha entrado un rival no puede mover
+    # si todavia no ha entrado un rival no puede mover
     if match.status == "Waiting":
-        emit('notice', {'msg': 'La partida esta esperando a un jugador'}, room = matchID)
+        emit('notice', {
+             'msg': 'La partida esta esperando a un jugador'}, room=matchID)
         return
     elif match.status == "Finished":
-        emit('notice', {'msg': 'La partida ha acabado!'}, room = matchID)
+        emit('notice', {'msg': 'La partida ha acabado!'}, room=matchID)
         return
-    #para que pueda mover tiene que ser su turno
+    # para que pueda mover tiene que ser su turno
     elif current_user.id == match.turn or match.solo:
-        #conseguimos el numero de turno para saber si es empate
-        nturn = db.session.query(func.count(Move.id_match)).filter(Move.id_match == matchID).one()
+        # conseguimos el numero de turno para saber si es empate
+        nturn = db.session.query(func.count(Move.id_match)).filter(
+            Move.id_match == matchID).one()
         turn_number = nturn[0]
-        #comprueba si el movimiento es valido
+        # comprueba si el movimiento es valido
         board = getBoard(matchID)
         if u.legalMove(board, x, y) == False:
-            #movimiento no valido
-            print('no valido')
+            # movimiento no valido
             return
-        #comprueba si el movimiento es ganador o empate
+        # comprueba si el movimiento es ganador o empate
         elif u.win(board, x, y, color) or turn_number == 41:
             match.status = "Finished"
-        #añadimos el movimiento a la base de datos
-        new_move = Move(id_match=matchID, x=x, y=y, color=color, nturn=turn_number)
+        # añadimos el movimiento a la base de datos
+        new_move = Move(id_match=matchID, x=x, y=y,
+                        color=color, nturn=turn_number)
         db.session.add(new_move)
-        #rota turno
+        # rota turno
         if match.turn == match.user1_id:
             match.turn = match.user2_id
         else:
             match.turn = match.user1_id
         db.session.commit()
-        print('ha emitido el place')
-        emit('place', {'x': x, 'y':y, 'color':color}, room = matchID)
+        emit('place', {'x': x, 'y': y, 'color': color}, room=matchID)
     else:
-        print('no turno')
-        #no es su turno
+        # no es su turno
         return
-    
+
+
 @socketio.on('aiJoin')
 def aiJoin(data, namespace='/match'):
-    print('entra al aiJOIN')
     matchID = int(session.get('room'))
     match = Match.query.get(matchID)
 
     if match.user2_id:
-        #ya hay un jugador en la partida
+        # ya hay un jugador en la partida
         return
 
-    #sacamos el usuario de la ia
+    # sacamos el usuario de la ia
     ai_id = int(data['ai'])
     ai_user = User.query.get(ai_id)
 
-    #se elige en que orden empieza la partida
+    # se elige en que orden empieza la partida
     if data['color'] == 'red':
         match.user1_id = ai_id
         match.turn = ai_id
@@ -106,10 +105,11 @@ def aiJoin(data, namespace='/match'):
     else:
         match.user2_id = ai_id
 
-    #empieza la partida y guardamos los datos
+    # empieza la partida y guardamos los datos
     match.status = "Started"
     match.solo = True
     db.session.commit()
 
     matchInfo = getMatchInfo(matchID)
-    emit('status', {'msg':'La IA: '+ ai_user.first_name +' ha entrado a la sala', 'matchInfo': matchInfo}, room = matchID)
+    emit('status', {'msg': 'La IA: ' + ai_user.first_name +
+                    ' ha entrado a la sala', 'matchInfo': matchInfo}, room=matchID)

@@ -54,7 +54,9 @@ function _initSocket(socket){
         if(typeof data.board != "undefined"){
             loadBoard(data.board)
         }
-        $('#matchInfo').empty().append("Usuario 1: "+data.matchInfo.username1+"<br>Usuario 2: "+data.matchInfo.username2+"<br>Estado de la partida: "+data.matchInfo.status+"<br>Id de partida: "+data.matchInfo.id)
+        $('#matchInfo').empty().append("Usuario 1: "+data.matchInfo.username1+"<br>Usuario 2: "+
+        data.matchInfo.username2+"<br>Estado de la partida: "+
+        data.matchInfo.status+"<br>Id de partida: "+data.matchInfo.id)
 
         //ver si es una partida contra la IA 
         if(ai_names.includes(data.matchInfo.username1)){
@@ -123,6 +125,7 @@ function getData(){
 
 
 //-------------------------------------------------------------------------------------------//
+
 function soloPlayTurnSystem(solo_play){
     if(solo_play){
         //ver si es turno de la ia

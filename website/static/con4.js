@@ -283,21 +283,18 @@ function firstBranch(board, turn, depth){
 	var freePlaces = getFreeValidPlaces(board);
 	var max_x = -1;
 
-	console.log('NUEVA ITERACION')
 	for(var i = 0, len = freePlaces.length; i < len; i++){
 		var freePlace = freePlaces[i];
 		var x = freePlace[0];
 		var y = freePlace[1];
 
 		var simulatedBoard = simulateBoard(x, y, turn, board);
-		console.log(x,y)
 		if(checkNinRow(simulatedBoard, x, y, turn, 3)){
 			maxEval = 999999;
 			max_x = x;
 			break;
 		}
 		var eval = minimax(x, y, depth-1, false, changeColor(turn), 0, simulatedBoard);
-		console.log(eval)
 		if(eval >= maxEval){
 			maxEval = eval;
 			max_x = x;

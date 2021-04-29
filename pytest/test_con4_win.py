@@ -33,8 +33,8 @@ def legalMove(board, x, y):
     if insideBoard(board, x, y) == False:
         return False
 
-    cond1 = board[y][x] == 'free'
-    cond2 = (board[y-1][x] == 'red') or (board[y-1][x] == 'yellow')
+    cond1 = board[y][x] == ''
+    cond2 = (board[y-1][x] == 'x') or (board[y-1][x] == 'o')
     cond3 = (y == 0)
 
     if (cond1 and cond2) or (cond3):

@@ -56,7 +56,7 @@
         <li><a href="#installation">Instalación</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usabilidad</a></li>
+    <li><a href="#usage">Como se ve</a></li>
     <li><a href="#contributing">Contribuye</a></li>
     <li><a href="#license">Licencia</a></li>
     <li><a href="#contact">Contacto</a></li>
@@ -81,6 +81,7 @@ Utilizando el editor de codigo fuente VSCode con las siguientes extensiones inst
 * []() Prettier
 * []() Python Docstring Generator
 * []() MarkDownLint
+* []() SQLite
 <!-- GETTING STARTED -->
 ## Empezando
 
@@ -126,11 +127,17 @@ Para comprobar la correcta instalacion de git puedes utilizar el siguiente coman
 
 
 <!-- USAGE EXAMPLES -->
-## Usabilidad
+## Como se ve
 <!--Esto lo iré rellenando segun la aplicacion vaya adquiriendo funcionalidad -->
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+En este apartado adjunto unas imagenes en las que seque se vea como se ve la web en funcionamiento, si probais el proyecto y no se me parecido a lo que se ve en las siguientes imagenes es porque algo debe de estar funcionando mal.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+**Inicio de sesion**
+![image info](./imgreadme/ImgReadme1.png)
+**Inicio**
+![image info](./imgreadme/ImgReadme2.png)
+**Crear Partida**
+![image info](./imgreadme/ImgReadme3.png)
+
 
 <!-- CONTRIBUTING -->
 ## Contribuye
@@ -151,7 +158,7 @@ Distribuido bajo la licencia MIT. Ver `LICENSE` para más información.
 <!-- CONTACT -->
 ## Contacto
 
-Jose Antonio Velasco - [@twitter_handle](https://twitter.com/twitter_handle) - email
+Jose Antonio Velasco - jose.antonio.velasco.monje@gmail.com
 
 Project Link: [https://github.com/JoseAntonioVelasco/Python_Conn4Web](https://github.com/JoseAntonioVelasco/Python_Conn4Web)
 
