@@ -12,7 +12,7 @@ class Match(db.Model):
     turn = db.Column(db.Integer, db.ForeignKey('user.id'))
     solo = db.Column(db.Boolean)
 
-    # define relationships
+    # define las relaciones
     user1 = db.relationship("User", foreign_keys=[user1_id])
     user2 = db.relationship("User", foreign_keys=[user2_id])
 
@@ -36,6 +36,15 @@ class User(db.Model, UserMixin):
 
 
 def getBoard(matchID):
+    """
+    Retorna el tablero de una partida.
+
+    Args:
+        matchID (int): id de partida de la que quieres sacar su tablero
+
+    Returns:
+        list: lista que contiene el tablero de la partida
+    """
     board = []
     for y in range(6):
         row = []
@@ -50,6 +59,15 @@ def getBoard(matchID):
 
 
 def getMatchInfo(matchID):
+    """
+    Retorna un diccionario con el id, usuario1, usuario2 si lo tuviera y el estado de la partida.
+
+    Args:
+        matchID (int): id de partida de la que quieres sacar su informacion
+
+    Returns:
+        dictionary: diccionario con la informacion encontrada de la partida
+    """
 
     match = Match.query.get(matchID)
     user1 = User.query.get(match.user1_id)

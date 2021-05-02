@@ -1,9 +1,13 @@
+//          Principio
+//+----------------------------+
+//|      Canales socket        |
+//+----------------------------+
 function _initSocket(socket){
     var solo_play = false;
 
-    //+-------------------------------+
-    //| broadcast messages to backend |
-    //+-------------------------------+
+    //+----------------------------+
+    //| emite  mensajes al backend |
+    //+----------------------------+
 
     //jugador se conecta a la partida
     socket.on('connect', function() {
@@ -40,9 +44,9 @@ function _initSocket(socket){
 
 
 
-    //+-----------------------------------+
-    //| messages from backend to frontend |
-    //+-----------------------------------+
+    //+----------------------------------+
+    //| mensajes del backend al frontend |
+    //+----------------------------------+
 
     //un jugador entra en la partida
     socket.on('status', function(data){
@@ -119,14 +123,19 @@ function getData(){
         alert("Selecciona el color de la IA");
         return;
     }
-
+    //emite al backend
     socket.emit('aiJoin',{ai: ai, color: color})
 }
 
+//          Fin
+//+----------------------------+
+//|      Canales socket        |
+//+----------------------------+
 
-//-------------------------------------------------------------------------------------------//
 
 function soloPlayTurnSystem(solo_play){
+    //sistema de turnos cuando se juega en solitario es controlado por esta funcion
+
     if(solo_play){
         //ver si es turno de la ia
         if(ai_turn){
@@ -198,6 +207,7 @@ function randomPlusIA(){
     return x;
 }
 function minimaxIA(){
+    //busca la mejor columna entre todas las disponibles
     var x = firstBranch(gameBoard, ai_color, 5)
     return x;
 }

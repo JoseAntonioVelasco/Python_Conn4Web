@@ -182,7 +182,7 @@ function checkNinRowPoints(board, x, y, turn, n){
 			}
 			
 		}
-		//despues de analizar la direccion se evalua la direccion
+		//despues de analizar la direccion, se evalua la direccion
 		
 		if(n == 4 && counter == 2){
 			if(freeSpace >= 2){

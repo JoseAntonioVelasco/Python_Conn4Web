@@ -59,7 +59,7 @@ def sign_up():
             flash('El nombre tiene que ser mas largo que 1 caracter.',
                   category='error')
         elif password1 != password2:
-            # las contraseñas tienen que coincider
+            # las contraseñas tienen que coincidir
             flash('Las contraseñas no coinciden.', category='error')
         elif len(password1) < 7:
             # la contraseña debe tener al menos 7 caracteres

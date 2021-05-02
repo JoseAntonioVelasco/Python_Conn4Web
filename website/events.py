@@ -15,7 +15,7 @@ def join(message, namespace='/match'):
     matchID = int(session.get('room'))
     join_room(matchID)
 
-    # le asignamos un color al usuario, si es el que crea la partida sera el color rojo, si es el que se uno sera el amarillo
+    # le asignamos un color al usuario, si es el que crea la partida sera el color rojo, si es el que se une sera el amarillo
     match = Match.query.get(matchID)
     color = "undefined"
     if current_user.id == match.user1_id:

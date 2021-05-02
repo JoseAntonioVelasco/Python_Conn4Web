@@ -29,11 +29,11 @@
   <p align="center">
     Flask webserver que aloja el juego conecta 4
     <br />
-    <a href="https://github.com/JoseAntonioVelasco/Python_Conn4Web">View Demo</a>
+    <a href="https://github.com/JoseAntonioVelasco/Python_Conn4Web">Ver demo</a>
     ·
-    <a href="https://github.com/JoseAntonioVelasco/Python_Conn4Web/issues">Report Bug</a>
+    <a href="https://github.com/JoseAntonioVelasco/Python_Conn4Web/issues">Reportar un error</a>
     ·
-    <a href="https://github.com/JoseAntonioVelasco/Python_Conn4Web/issues">Request Feature</a>
+    <a href="https://github.com/JoseAntonioVelasco/Python_Conn4Web/issues">Contribuye</a>
   </p>
 </p>
 
@@ -44,22 +44,22 @@
   <summary><h2 style="display: inline-block">Tabla de Contenidos</h2></summary>
   <ol>
     <li>
-      <a href="#about-the-project">Sobre el proyecto</a>
+      <a href="#sobre-el-proyecto">Sobre el proyecto</a>
       <ul>
-        <li><a href="#built-with">Hecho con</a></li>
+        <li><a href="#hecho-con">Hecho con</a></li>
       </ul>
     </li>
     <li>
-      <a href="#getting-started">Empezando</a>
+      <a href="#empezando">Empezando</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisitos</a></li>
-        <li><a href="#installation">Instalación</a></li>
+        <li><a href="#prerrequisitos">Prerrequisitos</a></li>
+        <li><a href="#instalación-del-proyecto">Instalación</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Como se ve</a></li>
-    <li><a href="#contributing">Contribuye</a></li>
-    <li><a href="#license">Licencia</a></li>
-    <li><a href="#contact">Contacto</a></li>
+    <li><a href="#ejectuar-el-proyecto">Ejecutar el proyecto</a></li>
+    <li><a href="#contribuye">Contribuye</a></li>
+    <li><a href="#licencia">Licencia</a></li>
+    <li><a href="#contacto">Contacto</a></li>
   </ol>
 </details>
 
@@ -68,6 +68,8 @@
 ## Sobre el proyecto
 
 Proyecto final para el grado superior Desarrollo de Aplicaciones Multiplataforma.
+
+Web simple desarrollada en Python en la que los usuarios registrados podran jugar al Conecta 4 contra otros usuarios o en solitario contra unas inteligencias artificiales programadas en javascript.
 
 ### Hecho con
 
@@ -127,9 +129,15 @@ Para comprobar la correcta instalacion de git puedes utilizar el siguiente coman
 
 
 <!-- USAGE EXAMPLES -->
-## Como se ve
+## Ejecutar el proyecto
 <!--Esto lo iré rellenando segun la aplicacion vaya adquiriendo funcionalidad -->
-En este apartado adjunto unas imagenes en las que seque se vea como se ve la web en funcionamiento, si probais el proyecto y no se me parecido a lo que se ve en las siguientes imagenes es porque algo debe de estar funcionando mal.
+Una vez ya instalado el proyecto para ejecutarlo tenemos que tener activo el entorno virtual del proyecto y despues solo hace ejecutar el siguiente comando: 
+   ```sh
+   python app.py
+   ```
+En la primera ejecución se creara la base de datos.
+
+En este apartado adjunto unas imagenes en las que ve como es la web en funcionamiento, si probais el proyecto y no se me parecido a lo que se ve en las siguientes imagenes es porque algo debe de estar funcionando mal.
 
 **Inicio de sesion**
 ![image info](./imgreadme/ImgReadme1.PNG)
