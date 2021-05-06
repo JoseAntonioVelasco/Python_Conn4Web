@@ -56,7 +56,7 @@
         <li><a href="#instalación-del-proyecto">Instalación</a></li>
       </ul>
     </li>
-    <li><a href="#ejectuar-el-proyecto">Ejecutar el proyecto</a></li>
+    <li><a href="#ejecutar-el-proyecto">Ejecutar el proyecto</a></li>
     <li><a href="#contribuye">Contribuye</a></li>
     <li><a href="#licencia">Licencia</a></li>
     <li><a href="#contacto">Contacto</a></li>
@@ -87,7 +87,7 @@ Utilizando el editor de codigo fuente VSCode con las siguientes extensiones inst
 <!-- GETTING STARTED -->
 ## Empezando
 
-Para conseguir una copia del proyecto y poner el proyecto a funcionar seguir los siguientes pasos.
+Para conseguir una copia del proyecto y poner el proyecto a funcionar sigue los siguientes pasos.
 
 ### Prerrequisitos
 
@@ -130,8 +130,7 @@ Para comprobar la correcta instalacion de git puedes utilizar el siguiente coman
 
 <!-- USAGE EXAMPLES -->
 ## Ejecutar el proyecto
-<!--Esto lo iré rellenando segun la aplicacion vaya adquiriendo funcionalidad -->
-Una vez ya instalado el proyecto para ejecutarlo tenemos que tener activo el entorno virtual del proyecto y despues solo hace ejecutar el siguiente comando: 
+Una vez ya instalado el proyecto para ejecutarlo tenemos que tener activo el entorno virtual del proyecto y después solo hace ejecutar el siguiente comando: 
    ```sh
    python app.py
    ```
@@ -139,7 +138,7 @@ En la primera ejecución se creara la base de datos.
 
 En este apartado adjunto unas imagenes en las que ve como es la web en funcionamiento, si probais el proyecto y no se me parecido a lo que se ve en las siguientes imagenes es porque algo debe de estar funcionando mal.
 
-**Inicio de sesion**
+**Inicio de sesión**
 ![image info](./imgreadme/ImgReadme1.PNG)
 **Inicio**
 ![image info](./imgreadme/ImgReadme2.PNG)

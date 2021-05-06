@@ -132,7 +132,7 @@ function proxCenter(x){
 			score = score + 3;
 			break;
 		case 3:
-			score = score + 10;
+			score = score + 80;
 			break;
 	}
 	return score;
@@ -207,6 +207,11 @@ function checkNinRowPoints(board, x, y, turn, n){
 function evaluateMove(board, x, y, turn){
 	//retorna los puntos que vale poner una ficha en esa posicion en el tablero
 	var score = 0;
+	/*
+	Esta es la heuristica del minimax, para hacer el minimax mas inteligente añade funciones que comprueben cosas
+	y den puntos por ello, el ajustar la heuristica puede ser complicado y si lo haces mal lo puedes volver mas "tonto"
+	*/
+	
 	score = checkNinRowPoints(board, x, y, turn, 4); //3 en raya
 	//score = checkNinRowPoints(board, x, y, changeColor(turn), 4) + score; //puntos por bloquear 3 en raya
 	//score += checkNinRowPoints(board, x, y, turn, 5); //2 en raya
